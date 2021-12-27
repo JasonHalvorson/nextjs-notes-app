@@ -1,11 +1,10 @@
 import Router from 'next/router';
 import Navigation from '../components/Navigation/Navigation';
 import Textarea from '../components/Form/Textarea';
+import Expiry from '../components/Form/Expiry';
 // import Color from '../components/Form/Color';
 import { useState } from 'react';
-
-// TODO: add expiry
-// const expiry = [{ time: '10 Minutes' }, { time: '1 Hour' }, { time: '24 Hours' }, { time: '7 Days' }, { time: '1 Month' }, { time: '1 Year' }];
+import { addMinutes, addHours, addDays, formatISO } from 'date-fns';
 
 // const colors = [
 //     { name: 'Pink', bgColor: 'bg-pink-500', selectedColor: 'ring-pink-500' },
@@ -15,8 +14,20 @@ import { useState } from 'react';
 //     { name: 'Yellow', bgColor: 'bg-yellow-500', selectedColor: 'ring-yellow-500' },
 // ];
 
+const expiry = [
+    { displayTime: '10 Minutes', computedTime: () => formatISO(addMinutes(new Date(), 10)) },
+    { displayTime: '30 Minutes', computedTime: () => addMinutes(new Date(), 30) },
+    { displayTime: '1 Hour', computedTime: () => formatISO(addHours(new Date(), 1)) },
+    { displayTime: '1 Day', computedTime: () => formatISO(addDays(new Date(), 1)) },
+    { displayTime: '7 Days', computedTime: () => formatISO(addDays(new Date(), 7)) },
+    { displayTime: '1 Month', computedTime: () => formatISO(addDays(new Date(), 30)) },
+    { displayTime: '1 Year', computedTime: () => formatISO(addDays(new Date(), 365)) },
+    { displayTime: 'Never', computedTime: () => null },
+];
+
 export default function Home() {
     const [state, setState] = useState({ to: '', from: '', content: '' /*color: colors[1] */ });
+    const [expiryTime, setExpiryTime] = useState(expiry[7]);
 
     const handleChange = (event) => {
         const { name, value } = event.target;
@@ -30,6 +41,7 @@ export default function Home() {
             to: state.to,
             from: state.from,
             content: state.content,
+            expiry: expiryTime.computedTime(),
         };
         await fetch('/api/createNote', {
             method: 'POST',
@@ -67,6 +79,10 @@ export default function Home() {
 
                 <div className="mt-5">
                     <Textarea onChange={handleChange} value={state.content} />
+                </div>
+
+                <div className="mt-5">
+                    <Expiry onChange={setExpiryTime} value={expiryTime} expiry={expiry} />
                 </div>
 
                 <div className="mt-5">

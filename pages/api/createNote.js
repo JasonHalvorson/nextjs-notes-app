@@ -2,7 +2,7 @@ import prisma from '../../lib/prisma';
 import randomstring from 'randomstring';
 
 export default async function createNote(req, res) {
-    const { to, from, content } = req.body;
+    const { to, from, content, expiry } = req.body;
 
     const slug = randomstring.generate(16);
 
@@ -13,6 +13,7 @@ export default async function createNote(req, res) {
                 from,
                 content,
                 slug,
+                expiry,
             },
         });
         res.status(201).json({ slug });

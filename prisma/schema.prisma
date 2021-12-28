@@ -15,4 +15,5 @@ model Note {
   createdAt DateTime  @default(now())
   slug      String    @unique
   expiry    DateTime?
+  color     String
 }

@@ -2,10 +2,11 @@ import prisma from '../lib/prisma';
 import Navigation from '../components/Navigation/Navigation';
 import Link from 'next/link';
 import { formatDistanceToNow } from 'date-fns';
+import { colors } from '../lib/colors';
 
 export const getServerSideProps = async ({ params }) => {
     try {
-        const { to, from, content, expiry } = await prisma.note.findUnique({
+        const { to, from, content, expiry, color } = await prisma.note.findUnique({
             where: {
                 slug: params.slug,
             },
@@ -14,20 +15,21 @@ export const getServerSideProps = async ({ params }) => {
                 from: true,
                 content: true,
                 expiry: true,
+                color: true,
             },
         });
         if (expiry && new Date(expiry) < new Date()) {
             return { props: { error: ['Note has expired.', `This note expired ${formatDistanceToNow(new Date(expiry))} ago.`] } };
         }
         return {
-            props: { to, from, content },
+            props: { to, from, content, color },
         };
     } catch (TypeError) {
         return { props: { error: ['Note not found.', 'No note exists at this location.'] } };
     }
 };
 
-export default function Slug({ to, from, content, error }) {
+export default function Slug({ to, from, content, error, color }) {
     if (!to || !from || !content || error) {
         return (
             <Navigation pageTitle="Error">
@@ -51,7 +53,7 @@ export default function Slug({ to, from, content, error }) {
     }
 
     return (
-        <Navigation pageTitle={to} isNote>
+        <Navigation pageTitle={to} isNote bgColor={colors[color].bgColor} buttonStyle={colors[color].buttonStyle}>
             <div>
                 <p>{content}</p>
                 <h2 className="text-right text-2xl">Love, {from}</h2>

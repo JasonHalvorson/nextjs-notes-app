@@ -1,6 +1,6 @@
 import { Fragment } from 'react';
 import { Disclosure, Menu, Transition } from '@headlessui/react';
-import { PencilAltIcon, BellIcon, MenuIcon, XIcon } from '@heroicons/react/outline';
+import { PencilAltIcon, MenuIcon, XIcon } from '@heroicons/react/outline';
 import Link from 'next/link';
 import CopyButton from './CopyButton';
 import { useRouter } from 'next/router';
@@ -19,11 +19,11 @@ function isCurrent(href) {
     return router.asPath.startsWith(href);
 }
 
-export default function Navigation(props) {
+export default function Navigation({ isNote, pageTitle, children, bgColor, buttonStyle }) {
     return (
         <div className="min-h-full">
-            <div className="bg-gray-800 pb-32">
-                <Disclosure as="nav" className="bg-gray-800">
+            <div className={classNames(isNote ? bgColor : 'bg-gray-800', 'pb-32')}>
+                <Disclosure as="nav" className={isNote ? bgColor : 'bg-gray-800'}>
                     {({ open }) => (
                         <div>
                             <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -71,12 +71,12 @@ export default function Navigation(props) {
                 <header className="py-10">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-2">
                         <h1 className="text-3xl font-bold text-white">
-                            {props.isNote && 'Dear '}
-                            {props.pageTitle}
+                            {isNote && 'Dear '}
+                            {pageTitle}
                         </h1>
-                        {props.isNote && (
+                        {isNote && (
                             <div className="ml-auto">
-                                <CopyButton />
+                                <CopyButton buttonStyle={buttonStyle} />
                             </div>
                         )}
                     </div>
@@ -86,7 +86,7 @@ export default function Navigation(props) {
             <main className="-mt-32">
                 <div className="max-w-7xl mx-auto pb-12 px-4 sm:px-6 lg:px-8">
                     <div className="bg-white rounded-lg shadow px-5 py-6 sm:px-6">
-                        {props.children}
+                        {children}
                         {/* <div className="border-4 border-dashed border-gray-200 rounded-lg h-96" /> */}
                     </div>
                 </div>

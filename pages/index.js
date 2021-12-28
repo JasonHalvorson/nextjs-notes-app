@@ -2,17 +2,10 @@ import Router from 'next/router';
 import Navigation from '../components/Navigation/Navigation';
 import Textarea from '../components/Form/Textarea';
 import Expiry from '../components/Form/Expiry';
-// import Color from '../components/Form/Color';
+import Color from '../components/Form/Color';
 import { useState } from 'react';
 import { addMinutes, addHours, addDays, formatISO } from 'date-fns';
-
-// const colors = [
-//     { name: 'Pink', bgColor: 'bg-pink-500', selectedColor: 'ring-pink-500' },
-//     { name: 'Purple', bgColor: 'bg-purple-500', selectedColor: 'ring-purple-500' },
-//     { name: 'Blue', bgColor: 'bg-blue-500', selectedColor: 'ring-blue-500' },
-//     { name: 'Green', bgColor: 'bg-green-500', selectedColor: 'ring-green-500' },
-//     { name: 'Yellow', bgColor: 'bg-yellow-500', selectedColor: 'ring-yellow-500' },
-// ];
+import { colors } from '../lib/colors';
 
 const expiry = [
     { displayTime: '10 Minutes', computedTime: () => formatISO(addMinutes(new Date(), 10)) },
@@ -26,10 +19,11 @@ const expiry = [
 ];
 
 export default function Home() {
-    const [state, setState] = useState({ to: '', from: '', content: '' /*color: colors[1] */ });
+    const [state, setState] = useState({ to: '', from: '', content: '' });
     const [expiryTime, setExpiryTime] = useState(expiry[7]);
+    const [color, setColor] = useState(Object.keys(colors)[0]);
 
-    const handleChange = (event) => {
+    const handleTextInputChange = (event) => {
         const { name, value } = event.target;
         setState((prevState) => ({ ...prevState, [name]: value }));
     };
@@ -42,6 +36,7 @@ export default function Home() {
             from: state.from,
             content: state.content,
             expiry: expiryTime.computedTime(),
+            color: color,
         };
         await fetch('/api/createNote', {
             method: 'POST',
@@ -64,7 +59,7 @@ export default function Home() {
                             To
                         </label>
                         <div className="mt-1">
-                            <input onChange={handleChange} value={state.to} type="text" name="to" id="to" className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" placeholder="Recipient" required />
+                            <input onChange={handleTextInputChange} value={state.to} type="text" name="to" id="to" className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" placeholder="Recipient" required />
                         </div>
                     </div>
                     <div>
@@ -72,22 +67,22 @@ export default function Home() {
                             From
                         </label>
                         <div className="mt-1">
-                            <input onChange={handleChange} value={state.from} type="text" name="from" id="from" className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" placeholder="You" required />
+                            <input onChange={handleTextInputChange} value={state.from} type="text" name="from" id="from" className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" placeholder="You" required />
                         </div>
                     </div>
                 </div>
 
                 <div className="mt-5">
-                    <Textarea onChange={handleChange} value={state.content} />
+                    <Textarea onChange={handleTextInputChange} value={state.content} />
                 </div>
 
                 <div className="mt-5">
+                    <p className="block text-sm font-medium text-gray-700">Expiry</p>
                     <Expiry onChange={setExpiryTime} value={expiryTime} expiry={expiry} />
                 </div>
 
                 <div className="mt-5">
-                    {/* TODO: add colors */}
-                    {/* <Color onChange={handleChange} value={state.color} colors={colors} /> */}
+                    <Color onChange={setColor} value={color} />
                 </div>
 
                 <button disabled={state.to === '' || state.from === '' || state.content === ''} type="submit" className="mt-10 inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:bg-indigo-400">

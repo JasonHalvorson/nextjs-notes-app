@@ -1,11 +1,13 @@
 import Router from 'next/router';
+import Head from 'next/head';
+import { useState } from 'react';
 import Navigation from '../components/Navigation/Navigation';
 import Textarea from '../components/Form/Textarea';
 import Expiry from '../components/Form/Expiry';
 import Color from '../components/Form/Color';
-import { useState } from 'react';
-import { addMinutes, addHours, addDays, formatISO } from 'date-fns';
+import MarkdownCheatsheet from '../components/Form/MarkdownCheatsheet';
 import { colors } from '../lib/colors';
+import { addMinutes, addHours, addDays, formatISO } from 'date-fns';
 
 const expiry = [
     { displayTime: '10 Minutes', computedTime: () => formatISO(addMinutes(new Date(), 10)) },
@@ -22,10 +24,15 @@ export default function Home() {
     const [state, setState] = useState({ to: '', from: '', content: '' });
     const [expiryTime, setExpiryTime] = useState(expiry[7]);
     const [color, setColor] = useState(Object.keys(colors)[0]);
+    const [openCheatsheet, setOpenCheatsheet] = useState(false);
 
     const handleTextInputChange = (event) => {
         const { name, value } = event.target;
         setState((prevState) => ({ ...prevState, [name]: value }));
+    };
+
+    const handleMdCsClick = () => {
+        setOpenCheatsheet(true);
     };
 
     const submitData = async (e) => {
@@ -51,6 +58,9 @@ export default function Home() {
 
     return (
         <Navigation pageTitle="Create Note">
+            <Head>
+                <title>Create Note</title>
+            </Head>
             <form onSubmit={submitData}>
                 <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
                     <div className="">
@@ -73,7 +83,7 @@ export default function Home() {
                 </div>
 
                 <div className="mt-5">
-                    <Textarea onChange={handleTextInputChange} value={state.content} />
+                    <Textarea onChange={handleTextInputChange} value={state.content} handleMdCsClick={handleMdCsClick} />
                 </div>
 
                 <div className="mt-5">
@@ -89,6 +99,7 @@ export default function Home() {
                     Create Note
                 </button>
             </form>
+            <MarkdownCheatsheet open={openCheatsheet} setOpen={setOpenCheatsheet} />
         </Navigation>
     );
 }

@@ -1,5 +1,4 @@
-import { Fragment } from 'react';
-import { Disclosure, Menu, Transition } from '@headlessui/react';
+import { Disclosure } from '@headlessui/react';
 import { PencilAltIcon, MenuIcon, XIcon } from '@heroicons/react/outline';
 import Link from 'next/link';
 import CopyButton from './CopyButton';

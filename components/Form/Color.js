@@ -8,7 +8,7 @@ function classNames(...classes) {
 export default function Color({ onChange, value }) {
     return (
         <RadioGroup value={value} onChange={onChange}>
-            <RadioGroup.Label className="block text-sm font-medium text-gray-700">Choose an accent color</RadioGroup.Label>
+            <RadioGroup.Label className="block text-sm font-medium text-gray-700">Accent color</RadioGroup.Label>
             <div className="mt-4 grid grid-cols-8 md:grid-cols-16 gap-3 w-fit">
                 {Object.keys(colors).map((key) => {
                     const { bgColor, selectedColor } = colors[key];

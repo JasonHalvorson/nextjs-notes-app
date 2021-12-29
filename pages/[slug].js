@@ -3,6 +3,9 @@ import Navigation from '../components/Navigation/Navigation';
 import Link from 'next/link';
 import { formatDistanceToNow } from 'date-fns';
 import { colors } from '../lib/colors';
+import ReactMarkdown from 'react-markdown';
+import { markdownStyles } from '../lib/markdownStyles';
+import Head from 'next/head';
 
 export const getServerSideProps = async ({ params }) => {
     try {
@@ -33,6 +36,9 @@ export default function Slug({ to, from, content, error, color }) {
     if (!to || !from || !content || error) {
         return (
             <Navigation pageTitle="Error">
+                <Head>
+                    <title>Error</title>
+                </Head>
                 <main className="flex-grow flex flex-col justify-center max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 mt-5">
                     <div className="py-16">
                         <div className="text-center">
@@ -54,8 +60,11 @@ export default function Slug({ to, from, content, error, color }) {
 
     return (
         <Navigation pageTitle={to} isNote bgColor={colors[color].bgColor} buttonStyle={colors[color].buttonStyle}>
+            <Head>
+                <title>Note to {to}</title>
+            </Head>
             <div>
-                <p>{content}</p>
+                <ReactMarkdown components={markdownStyles}>{content}</ReactMarkdown>
                 <h2 className="text-right text-2xl">Love, {from}</h2>
             </div>
         </Navigation>

@@ -68,13 +68,13 @@ export default function Navigation({ isNote, pageTitle, children, bgColor, butto
                     )}
                 </Disclosure>
                 <header className="py-10">
-                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-2">
+                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 sm:grid-cols-2">
                         <h1 className="text-3xl font-bold text-white">
                             {isNote && 'Dear '}
                             {pageTitle}
                         </h1>
                         {isNote && (
-                            <div className="ml-auto">
+                            <div className="sm:ml-auto mt-5 sm:mt-0">
                                 <CopyButton buttonStyle={buttonStyle} />
                             </div>
                         )}

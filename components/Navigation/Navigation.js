@@ -30,7 +30,11 @@ export default function Navigation({ isNote, pageTitle, children, bgColor, butto
                                     <div className="flex items-center justify-between h-16 px-4 sm:px-0">
                                         <div className="flex items-center">
                                             <div className="flex-shrink-0">
-                                                <PencilAltIcon className="text-white w-10 h-10" />
+                                                <Link href="/">
+                                                    <a>
+                                                        <PencilAltIcon className="text-white w-10 h-10" />
+                                                    </a>
+                                                </Link>
                                             </div>
                                             <div className="hidden md:block">
                                                 <div className="ml-10 flex items-baseline space-x-4">

@@ -45,7 +45,7 @@ export default function Home() {
             expiry: expiryTime.computedTime(),
             color: color,
         };
-        await fetch('/api/createNote', {
+        await fetch('/api/create', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(body),

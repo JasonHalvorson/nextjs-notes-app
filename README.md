@@ -1,27 +1,51 @@
-# Next.js + Tailwind CSS Example
+# Nextjs-Notes-App
 
-This example shows how to use [Tailwind CSS](https://tailwindcss.com/) [(v3.0)](https://tailwindcss.com/blog/tailwindcss-v3) with Next.js. It follows the steps outlined in the official [Tailwind docs](https://tailwindcss.com/docs/guides/nextjs).
+An app to write shareable notes to others.
 
-## Preview
+Built using [Next.js](https://nextjs.org/), [TailwindCSS](https://tailwindcss.com/), and [Prisma](https://www.prisma.io/).
 
-Preview the example live on [StackBlitz](http://stackblitz.com/):
+Notes are stored in a [PostgreSQL](https://www.postgresql.org/) database.
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/vercel/next.js/tree/canary/examples/with-tailwindcss)
+### [View Live Demo](https://notes.jasonhalvorson.ca)
 
-## Deploy your own
+## Deploy your own with [Vercel](https://vercel.com):
 
-Deploy the example using [Vercel](https://vercel.com?utm_source=github&utm_medium=readme&utm_campaign=next-example):
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FJasonHalvorson%2Fnextjs-notes-app&env=DATABASE_URL&envDescription=The%20URL%20to%20the%20PostgreSQL%20database.)
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/git/external?repository-url=https://github.com/vercel/next.js/tree/canary/examples/with-tailwindcss&project-name=with-tailwindcss&repository-name=with-tailwindcss)
+## Or clone the repository locally:
 
-## How to use
+### Prerequisites
 
-Execute [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app) with [npm](https://docs.npmjs.com/cli/init) or [Yarn](https://yarnpkg.com/lang/en/docs/cli/create/) to bootstrap the example:
+This project was made with [Node.js](https://nodejs.org) version 16.13.0.
 
-```bash
-npx create-next-app --example with-tailwindcss with-tailwindcss-app
-# or
-yarn create next-app --example with-tailwindcss with-tailwindcss-app
+### Setup
+
+Download the code by either cloning this repository using git:
+
+```
+git clone https://github.com/JasonHalvorson/nextjs-notes-app.git
 ```
 
-Deploy it to the cloud with [Vercel](https://vercel.com/new?utm_source=github&utm_medium=readme&utm_campaign=next-example) ([Documentation](https://nextjs.org/docs/deployment)).
+... or [download a zip of the source code](https://github.com/JasonHalvorson/nextjs-notes-app/archive/refs/heads/master.zip).
+
+Once downloaded, open a terminal window in the project directory, and install dependencies with:
+
+```
+npm install
+```
+
+Then, copy .env.example to .env:
+
+```
+cp .env.example .env
+```
+
+Edit the .env file, replacing the placeholder value with the url to your database.
+
+Finally, start the development server:
+
+```
+npm run dev
+```
+
+And view it in your browser at `http://localhost:3000`.

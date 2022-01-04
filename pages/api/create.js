@@ -7,7 +7,7 @@ export default async function createNote(req, res) {
     const slug = randomstring.generate(16);
 
     try {
-        const result = await prisma.note.create({
+        await prisma.note.create({
             data: {
                 to,
                 from,

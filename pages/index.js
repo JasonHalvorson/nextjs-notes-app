@@ -105,7 +105,11 @@ export default function Home() {
                     <Color onChange={setColor} value={color} />
                 </div>
 
-                <button disabled={state.to === '' || state.from === '' || state.content === '' || state.submitting} type="submit" className="mt-10 inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:bg-indigo-400 w-40">
+                <button
+                    disabled={state.to === '' || state.from === '' || state.content === '' || state.submitting}
+                    type="submit"
+                    className={`mt-10 inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:bg-indigo-400 w-40 ${state.to === '' || state.from === '' || state.content === '' ? 'cursor-not-allowed' : state.submitting ? 'cursor-progress' : 'cursor-pointer'}`}
+                >
                     {state.submitting ? <LoadingIcon /> : <PencilAltIcon className="w-5 h-5 mr-3" />}
                     <span className="ml-auto">{state.submitting ? 'Creating...' : 'Create Note'}</span>
                 </button>

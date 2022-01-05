@@ -6,6 +6,7 @@ import { colors } from '../lib/colors';
 import ReactMarkdown from 'react-markdown';
 import { markdownStyles } from '../lib/markdownStyles';
 import Head from 'next/head';
+import ExpiryAlert from '../components/ExpiryAlert/ExpiryAlert';
 
 export const getServerSideProps = async ({ params }) => {
     try {
@@ -24,6 +25,11 @@ export const getServerSideProps = async ({ params }) => {
         if (expiry && new Date(expiry) < new Date()) {
             return { props: { error: ['Note has expired.', `This note expired ${formatDistanceToNow(new Date(expiry))} ago.`] } };
         }
+        if (expiry) {
+            return {
+                props: { to, from, content, color, expiry: formatDistanceToNow(new Date(expiry)) },
+            };
+        }
         return {
             props: { to, from, content, color },
         };
@@ -32,7 +38,7 @@ export const getServerSideProps = async ({ params }) => {
     }
 };
 
-export default function Slug({ to, from, content, error, color }) {
+export default function Slug({ to, from, content, error, color, expiry }) {
     if (!to || !from || !content || error) {
         return (
             <Navigation pageTitle="Error">
@@ -67,6 +73,7 @@ export default function Slug({ to, from, content, error, color }) {
                 <ReactMarkdown components={markdownStyles}>{content}</ReactMarkdown>
                 <h2 className="text-right text-2xl">Love, {from}</h2>
             </div>
+            {expiry && <ExpiryAlert expiry={expiry} bgColor={colors[color].bgColor} buttonStyle={colors[color].buttonStyle} />}
         </Navigation>
     );
 }

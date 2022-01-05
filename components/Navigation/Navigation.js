@@ -26,35 +26,33 @@ export default function Navigation({ isNote, pageTitle, children, bgColor, butto
                     {({ open }) => (
                         <div>
                             <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                                <div className="border-b border-gray-700">
-                                    <div className="flex items-center justify-between h-16 px-4 sm:px-0">
-                                        <div className="flex items-center">
-                                            <div className="flex-shrink-0">
-                                                <Link href="/">
-                                                    <a>
-                                                        <PencilAltIcon className="text-white w-10 h-10" />
-                                                    </a>
-                                                </Link>
-                                            </div>
-                                            <div className="hidden md:block">
-                                                <div className="ml-10 flex items-baseline space-x-4">
-                                                    {navigation.map((item) => (
-                                                        <Link href={item.href} key={item.name}>
-                                                            <a className={classNames(isCurrent(item.href) ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white', 'px-3 py-2 rounded-md text-sm font-medium')} aria-current={isCurrent(item.href) ? 'page' : undefined}>
-                                                                {item.name}
-                                                            </a>
-                                                        </Link>
-                                                    ))}
-                                                </div>
+                                <div className="flex items-center justify-between h-16 px-4 sm:px-0">
+                                    <div className="flex items-center">
+                                        <div className="flex-shrink-0">
+                                            <Link href="/">
+                                                <a>
+                                                    <PencilAltIcon className="text-white w-10 h-10" />
+                                                </a>
+                                            </Link>
+                                        </div>
+                                        <div className="hidden md:block">
+                                            <div className="ml-10 flex items-baseline space-x-4">
+                                                {navigation.map((item) => (
+                                                    <Link href={item.href} key={item.name}>
+                                                        <a className={classNames(isCurrent(item.href) ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white', 'px-3 py-2 rounded-md text-sm font-medium')} aria-current={isCurrent(item.href) ? 'page' : undefined}>
+                                                            {item.name}
+                                                        </a>
+                                                    </Link>
+                                                ))}
                                             </div>
                                         </div>
-                                        <div className="-mr-2 flex md:hidden">
-                                            {/* Mobile menu button */}
-                                            <Disclosure.Button className="bg-gray-800 inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
-                                                <span className="sr-only">Open main menu</span>
-                                                {open ? <XIcon className="block h-6 w-6" aria-hidden="true" /> : <MenuIcon className="block h-6 w-6" aria-hidden="true" />}
-                                            </Disclosure.Button>
-                                        </div>
+                                    </div>
+                                    <div className="-mr-2 flex md:hidden">
+                                        {/* Mobile menu button */}
+                                        <Disclosure.Button className="bg-gray-800 inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
+                                            <span className="sr-only">Open main menu</span>
+                                            {open ? <XIcon className="block h-6 w-6" aria-hidden="true" /> : <MenuIcon className="block h-6 w-6" aria-hidden="true" />}
+                                        </Disclosure.Button>
                                     </div>
                                 </div>
                             </div>
@@ -88,10 +86,7 @@ export default function Navigation({ isNote, pageTitle, children, bgColor, butto
 
             <main className="-mt-32">
                 <div className="max-w-7xl mx-auto pb-12 px-4 sm:px-6 lg:px-8">
-                    <div className="bg-white rounded-lg shadow px-5 py-6 sm:px-6">
-                        {children}
-                        {/* <div className="border-4 border-dashed border-gray-200 rounded-lg h-96" /> */}
-                    </div>
+                    <div className="bg-white rounded-lg shadow px-5 py-6 sm:px-6">{children}</div>
                 </div>
             </main>
         </div>

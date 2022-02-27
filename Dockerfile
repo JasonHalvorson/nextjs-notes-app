@@ -22,6 +22,7 @@ COPY . .
 ENV NEXT_TELEMETRY_DISABLED 1
 
 RUN npx prisma generate
+RUN npx prisma migrate deploy
 
 ARG DATABASE_URL=${DATABASE_URL}
 

@@ -8,6 +8,9 @@ WORKDIR /app
 
 # If using npm with a `package-lock.json` comment out above and use below instead
 COPY package.json package-lock.json ./ 
+
+COPY prisma ./prisma/
+
 RUN npm ci
 
 # Rebuild the source code only when needed
@@ -24,8 +27,6 @@ ENV NEXT_TELEMETRY_DISABLED 1
 ARG DATABASE_URL=${DATABASE_URL}
 
 RUN npx prisma generate
-RUN npx prisma migrate deploy
-
 
 RUN npm run build
 
@@ -41,7 +42,7 @@ RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 
 # You only need to copy next.config.js if you are NOT using the default configuration
-# COPY --from=builder /app/next.config.js ./
+COPY --from=builder /app/next.config.js ./
 COPY --from=builder /app/public ./public
 COPY --from=builder /app/package.json ./package.json
 
@@ -50,10 +51,13 @@ COPY --from=builder /app/package.json ./package.json
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
+# Copy Prisma
+COPY --from=builder /app/prisma /app/prisma
+
 USER nextjs
 
 EXPOSE 80
 
 ENV PORT 80
 
-CMD ["node", "server.js"]
+CMD ["/bin/sh" , "-c" , "npx prisma migrate deploy && node server.js" ] 
